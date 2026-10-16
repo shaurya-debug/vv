@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Shield against third-party Web3 wallet browser extension collisions -->
+    <script>
+      (function() {
+        try {
+          var origDefineProperty = Object.defineProperty;
+          Object.defineProperty = function(obj, prop, descriptor) {
+            if (obj === window && prop === 'ethereum') {
+              try {
+                if (descriptor) {
+                  descriptor.configurable = true;
+                }
+                return origDefineProperty.call(Object, obj, prop, descriptor);
+              } catch (e) {
+                try {
+                  if (descriptor && 'value' in descriptor) {
+                    window.ethereum = descriptor.value;
+                  }
+                } catch (_) {}
+                return obj;
+              }
+            }
+            return origDefineProperty.apply(Object, arguments);
+          };
+        } catch (_) {}
+
+        window.addEventListener('error', function(event) {
+          var isExtension = event.filename && (
+            event.filename.indexOf('chrome-extension://') !== -1 ||
+            event.filename.indexOf('moz-extension://') !== -1 ||
+            event.filename.indexOf('evmAsk.js') !== -1
+          );
+          var isEthereumError = event.message && (
+            event.message.indexOf('Cannot redefine property: ethereum') !== -1 ||
+            event.message.indexOf('ethereum') !== -1
+          );
+          if (isExtension || isEthereumError) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+      })();
+    </script>
+    <title>Vedic Pandit — Acharya Jitender Shastri | Astrologer, Tantra Samrat &amp; Gem Consultant</title>
+    <meta name="description" content="Official website of Acharya Jitender Shastri — Astrologer, Tantra Samrat &amp; Gem Consultant with 28+ years of authentic Vedic astrology, yagya rituals, tantra remedies, and certified gemstones." />
+    <meta property="og:title" content="Vedic Pandit — Acharya Jitender Shastri | Astrologer, Tantra Samrat &amp; Gem Consultant" />
+    <meta property="og:description" content="Guiding lives through 28+ years of authentic Vedic wisdom, astrological birth chart analysis, tantric shanti pooja, and certified gemstone consultations." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Vedic Pandit" />
+    <link rel="manifest" href="/manifest.json" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Noto+Serif+Devanagari:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-indigo-950 text-slate-100 antialiased selection:bg-yellow-400 selection:text-black">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and contact information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "pandit", "admin"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Vedic astrology and pooja consultation booking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "service": { "type": "string" },
+        "consultationDate": { "type": "string" },
+        "consultationTime": { "type": "string" },
+        "message": { "type": "string" },
+        "meetLink": { "type": "string" },
+        "chatSpaceId": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["pending", "paid", "waived"] },
+        "paymentMethod": { "type": "string" },
+        "paymentAmount": { "type": "number" },
+        "paymentCurrency": { "type": "string" },
+        "paymentTransactionId": { "type": "string" },
+        "status": { "type": "string", "enum": ["confirmed", "completed", "cancelled"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "phone", "service"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Consultation query or chat message with Pandit Ji",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "sender": { "type": "string", "enum": ["user", "pandit"] },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["text", "sender", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles keyed by their Firebase Auth UID"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Stores consultation appointments and payments"
+    },
+    "/chatMessages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Stores Vedic consultation chat messages"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Remix Vedic Pandit",
+  "description": "Vedic Pandit — Acharya Jitender Shastri | Astrologer, Tantra Samrat \u0026 Gem Consultant with 28+ years of authentic Vedic expertise.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

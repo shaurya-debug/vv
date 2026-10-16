@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Shield against browser wallet extension injections -->
+  <script>
+    (function() {
+      try {
+        var origDefineProperty = Object.defineProperty;
+        Object.defineProperty = function(obj, prop, descriptor) {
+          if (obj === window && prop === 'ethereum') {
+            try {
+              if (descriptor) descriptor.configurable = true;
+              return origDefineProperty.call(Object, obj, prop, descriptor);
+            } catch (e) {
+              try { if (descriptor && 'value' in descriptor) window.ethereum = descriptor.value; } catch (_) {}
+              return obj;
+            }
+          }
+          return origDefineProperty.apply(Object, arguments);
+        };
+      } catch (_) {}
+      window.addEventListener('error', function(event) {
+        if (event.message && (event.message.indexOf('Cannot redefine property: ethereum') !== -1 || event.message.indexOf('ethereum') !== -1)) {
+          event.stopImmediatePropagation();
+          event.preventDefault();
+          return true;
+        }
+      }, true);
+    })();
+  </script>
+  <title>Vedic Pandit — Acharya Jitender Shastri | Astrologer, Tantra Samrat & Gem Consultant</title>
+  <meta name="description" content="Official website of Acharya Jitender Shastri — Astrologer, Tantra Samrat & Gem Consultant with 28+ years of authentic Vedic astrology, yagya rituals, tantra remedies, and certified gemstones." />
+  
+  <!-- Fonts (Google Fonts CDN) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Noto+Serif+Devanagari:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN (Allowlisted) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            devanagari: ['Noto Serif Devanagari', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM from cdnjs (Allowlisted) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel from cdnjs (Allowlisted) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.10/babel.min.js"></script>
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-devanagari { font-family: 'Noto Serif Devanagari', serif; }
+    
+    .cosmic-gradient {
+      background: linear-gradient(135deg, #100b2b 0%, #2a0845 35%, #180b38 70%, #0a051d 100%);
+    }
+
+    .cosmic-stars {
+      background-image: 
+        radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 140px 180px, #facc15, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 240px 90px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 340px 290px, #fef08a, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 450px 160px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 580px 220px, #facc15, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 700px 330px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 850px 120px, #fef08a, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 980px 280px, #ffffff, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 1000px 400px;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0c0824; }
+    ::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #eab308; }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 25px rgba(234, 179, 8, 0.4); }
+      50% { box-shadow: 0 0 45px rgba(234, 179, 8, 0.7); }
+    }
+    .golden-glow {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-[#0b061e] text-slate-100 antialiased selection:bg-yellow-400 selection:text-black">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useMemo } = React;
+
+    // --- VEDIC MASTER DATA ---
+    const ASTROLOGER = {
+      name: "Acharya Jitender Shastri",
+      titles: "Astrologer • Tantra Samrat • Certified Gem Consultant",
+      experience: "28+ Years Continuous Sadhana",
+      lineage: "Sanatana Purohit Parampara",
+      address: "Chandigarh, India",
+      contact: {
+        phone: "+91 9466215390",
+        phoneFormatted: "+91 94662 15390",
+        email: "jksv390@gmail.com",
+        location: "Chandigarh, India",
+        timings: "Mon-Sat: 4:00 PM - 8:00 PM IST | Sun: 10:00 AM - 5:00 PM IST"
+      },
+      brandName: "Vedic Pandit",
+      heroSubtitle: "Astrologer, Tantra Samrat & Certified Gem Consultant",
+      heroLine: "Divine guidance through 28+ years of authentic Vedic wisdom, astrological birth chart analysis, tantric shanti pooja, and certified gemstone consultations.",
+      heroParagraph: "Guiding thousands of devotees across the globe through precise planetary calculations, dosha remedies, and sacred Vedic yagya rituals rooted in Sanatana Parampara.",
+      aboutHeading: "Authentic Sanatana Parampara & Vedic Wisdom",
+      stats: [
+        { value: "28+", label: "Years Experience" },
+        { value: "15,000+", label: "Kundali Consultations" },
+        { value: "3,200+", label: "Yagya & Pooja Vidhis" },
+        { value: "100%", label: "Lab Certified Gems" }
+      ]
+    };
+
+    const ZODIAC_SIGNS = [
+      { id: 'aries', symbol: '♈', rashi: 'Mesha (मेष)', english: 'Aries', rulingPlanet: 'Mangal (Mars)', element: 'Fire', dates: 'Mar 21 - Apr 19', gemstone: 'Red Coral (Moonga)', luckyNumber: '9, 18', prediction: 'Mars infuses dynamic vitality into your career. Auspicious time for initiating long-pending projects. Practice patience in financial partnerships and chant Gayatri Mantra at sunrise.', mantra: 'ॐ क्रां क्रीं क्रौं सः भौमाय नमः' },
+      { id: 'taurus', symbol: '♉', rashi: 'Vrishabha (वृषभ)', english: 'Taurus', rulingPlanet: 'Shukra (Venus)', element: 'Earth', dates: 'Apr 20 - May 20', gemstone: 'Diamond / Opal', luckyNumber: '6, 15', prediction: 'Venus bestows auspicious prosperity and harmonious family ties. Real estate and creative endeavors bring fruitful gains. Avoid speculative rash decisions on Tuesdays.', mantra: 'ॐ द्रां द्रीं द्रौं सः शुक्राय नमः' },
+      { id: 'gemini', symbol: '♊', rashi: 'Mithuna (मिथुन)', english: 'Gemini', rulingPlanet: 'Budha (Mercury)', element: 'Air', dates: 'May 21 - Jun 20', gemstone: 'Emerald (Panna)', luckyNumber: '5, 14', prediction: 'Mercury sharpens analytical acumen and business negotiations. Communication barriers dissolve. Offer green fodder or tulsi leaves to Lord Ganesha for unobstructed success.', mantra: 'ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः' },
+      { id: 'cancer', symbol: '♋', rashi: 'Karka (कर्क)', english: 'Cancer', rulingPlanet: 'Chandra (Moon)', element: 'Water', dates: 'Jun 21 - Jul 22', gemstone: 'Pearl (Moti)', luckyNumber: '2, 7', prediction: 'Moon guides emotional clarity and domestic peace. Favorable planetary alignment for spiritual pilgrimage and educational advancements. Keep silver coin in purse for mental tranquility.', mantra: 'ॐ श्रां श्रीं श्रौं सः चन्द्रमसे नमः' },
+      { id: 'leo', symbol: '♌', rashi: 'Simha (सिंह)', english: 'Leo', rulingPlanet: 'Surya (Sun)', element: 'Fire', dates: 'Jul 23 - Aug 22', gemstone: 'Ruby (Manikya)', luckyNumber: '1, 10', prediction: 'Surya illuminates leadership positions and government favor. Recognition from superiors is indicated. Offer Arghya with copper kalash to Surya Dev for radiant health.', mantra: 'ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः' },
+      { id: 'virgo', symbol: '♍', rashi: 'Kanya (कन्या)', english: 'Virgo', rulingPlanet: 'Budha (Mercury)', element: 'Earth', dates: 'Aug 23 - Sep 22', gemstone: 'Emerald (Panna)', luckyNumber: '5, 23', prediction: 'Meticulous planning brings substantial financial savings. Health conditions improve steadily. Feed street cows and chant Vishnu Sahasranama for rapid progress.', mantra: 'ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः' },
+      { id: 'libra', symbol: '♎', rashi: 'Tula (तुला)', english: 'Libra', rulingPlanet: 'Shukra (Venus)', element: 'Air', dates: 'Sep 23 - Oct 22', gemstone: 'White Sapphire / Opal', luckyNumber: '6, 24', prediction: 'Harmonious balance restored in marital and business alliances. New artistic investments turn lucrative. Light a fragrant ghee diya in your home sanctuary daily.', mantra: 'ॐ द्रां द्रीं द्रौं सः शुक्राय नमः' },
+      { id: 'scorpio', symbol: '♏', rashi: 'Vrishchika (वृश्चिक)', english: 'Scorpio', rulingPlanet: 'Mangal (Mars)', element: 'Water', dates: 'Oct 23 - Nov 21', gemstone: 'Red Coral (Moonga)', luckyNumber: '9, 27', prediction: 'Transformative breakthroughs in spiritual sadhana and hidden research. Guard against sudden temper in professional meetings. Hanuman Chalisa recitation yields instant protection.', mantra: 'ॐ क्रां क्रीं क्रौं सः भौमाय नमः' },
+      { id: 'sagittarius', symbol: '♐', rashi: 'Dhanu (धनु)', english: 'Sagittarius', rulingPlanet: 'Guru (Jupiter)', element: 'Fire', dates: 'Nov 22 - Dec 21', gemstone: 'Yellow Sapphire (Pukhraj)', luckyNumber: '3, 12', prediction: 'Brihaspati grants divine wisdom, higher education honors, and ancestral blessing. Long-distance travels bring fruitful connections. Apply saffron tilak on forehead daily.', mantra: 'ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः' },
+      { id: 'capricorn', symbol: '♑', rashi: 'Makara (मकर)', english: 'Capricorn', rulingPlanet: 'Shani (Saturn)', element: 'Earth', dates: 'Dec 22 - Jan 19', gemstone: 'Blue Sapphire (Neelam)', luckyNumber: '8, 17', prediction: 'Saturn rewards disciplined dedication and rigorous perseverance. Solid career foundation is solidified. Donate black sesame or mustard oil on Saturdays for Shani Kripa.', mantra: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः' },
+      { id: 'aquarius', symbol: '♒', rashi: 'Kumbha (कुम्भ)', english: 'Aquarius', rulingPlanet: 'Shani (Saturn)', element: 'Air', dates: 'Jan 20 - Feb 18', gemstone: 'Blue Sapphire / Amethyst', luckyNumber: '8, 26', prediction: 'Visionary humanitarian pursuits and community projects flourish. Financial windfall possible through technical innovations. Chant Maha Mrityunjaya Mantra for holistic well-being.', mantra: 'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः' },
+      { id: 'pisces', symbol: '♓', rashi: 'Meena (मीन)', english: 'Pisces', rulingPlanet: 'Guru (Jupiter)', element: 'Water', dates: 'Feb 19 - Mar 20', gemstone: 'Yellow Sapphire (Pukhraj)', luckyNumber: '3, 21', prediction: 'Jupiter bestows deep spiritual intuition, peaceful sleep, and overseas expansion. Creative talents earn widespread respect. Offer water to Peepal tree on Thursday mornings.', mantra: 'ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः' }
+    ];
+
+    const VEDIC_POOJAS = [
+      { id: 'navgraha', title: 'Navgraha Shanti Pooja', sanskrit: 'नवग्रह शान्ति पूजा', description: 'Harmonizes all 9 cosmic planetary influences, mitigating malefics and amplifying yogakaraka planets.', duration: '2 - 3 Hours', price: '₹5,100' },
+      { id: 'mrityunjaya', title: 'Maha Mrityunjaya Jaap & Anushthan', sanskrit: 'महामृत्युंजय अनुष्ठान', description: 'Powerful Vedic life-protecting invocation of Lord Shiva. Overcomes severe health afflictions and accidental dangers.', duration: '11,000 / 1.25 Lakh Jaap', price: '₹11,000' },
+      { id: 'baglamukhi', title: 'Maa Baglamukhi Shanti Vidhi', sanskrit: 'माँ बगलामुखी तन्त्र पूजा', description: 'Paralyzes adversarial forces, wins lingering court litigation, and resolves intense professional conflicts.', duration: '3 - 4 Hours', price: '₹15,000' },
+      { id: 'kaalsarp', title: 'Kaal Sarp Dosh Nivaran', sanskrit: 'कालसर्प दोष निवारण', description: 'Specialized Rahu-Ketu axis neutralizing ritual conducted with silver nag-nagin samagri and Vedic sankalpa.', duration: '3 Hours', price: '₹7,500' },
+      { id: 'mangal', title: 'Manglik Dosh Shanti Pooja', sanskrit: 'मांगलिक दोष शान्ति', description: 'Cures marriage impediments, cleanses marital discord, and ensures prosperous conjugal longevity.', duration: '2 Hours', price: '₹5,100' },
+      { id: 'rudrabhishek', title: 'Maha Rudrabhishek Vidhi', sanskrit: 'रुद्राभिषेक विधान', description: 'Sacred ablution of the Shiva Linga with Panchamrit, sugarcane juice, and 108 Bilva leaves to invite unceasing prosperity.', duration: '2.5 Hours', price: '₹5,100' }
+    ];
+
+    const YAGYAS = [
+      { id: 'chandi', title: 'Maha Chandi Yagya', sanskrit: 'महाचण्डी यज्ञ', description: 'Supreme Vedic havan from Durga Saptashati invoking Mahakali, Mahalakshmi, and Mahasaraswati to annihilate negative energies.', duration: 'Full Day Ritual', price: '₹21,000' },
+      { id: 'sudarshan', title: 'Maha Sudarshan Havan', sanskrit: 'महा सुदर्शन हवन', description: 'Invokes Lord Vishnu’s infallible flaming discus to construct an impenetrable spiritual shield around your home and enterprise.', duration: '3 - 4 Hours', price: '₹11,000' },
+      { id: 'lakshmi-kubera', title: 'Lakshmi Kubera Havan', sanskrit: 'लक्ष्मी कुबेर महायज्ञ', description: 'Magnetizes unhindered wealth flow, business expansion, and debt relief using rare lotus seeds and bilva offerings.', duration: '3 Hours', price: '₹9,500' }
+    ];
+
+    const SERVICES = [
+      { id: 'kundali', title: 'Comprehensive Kundali & Birth Chart Analysis', description: 'In-depth manual calculation of Lagna, Navamsha (D9), Dashas, and planetary transits (Gochar).', price: '₹1,500' },
+      { id: 'tantra', title: 'Tantric Remedy & Negative Energy Shanti', description: 'Spiritual diagnostic of evil eye (nazar), black magic removal, house bandhan, and ancestral pitra dosha remedies.', price: '₹3,500' },
+      { id: 'matchmaking', title: 'Kundali Milan & Vivah Muhurat', description: 'Ashtakoot Guna Milan (36 Gunas), Manglik dosha balancing, emotional compatibility, and auspicious marriage muhurat.', price: '₹2,100' },
+      { id: 'gemstone', title: 'Certified Gemstone Consultation (Ratna Shastra)', description: 'Identification of ideal natural gemstones based on planetary degrees, ratti calculation, metal setting, and energization vidhi.', price: '₹1,100' },
+      { id: 'vastu', title: 'Vastu Shastra Spatial Consultation', description: 'Harmonizing residential and commercial structures with the five primordial elements (Pancha Bhoota) without demolition.', price: '₹5,100' },
+      { id: 'prashna', title: 'Prashna Kundali (Horary Astrology)', description: 'Accurate instant answers to immediate urgent queries based on the astrological chart cast at the exact moment of asking.', price: '₹1,100' }
+    ];
+
+    // Seed realistic bookings for initial availability demonstration
+    const INITIAL_SEED_BOOKINGS = [
+      {
+        id: 'seed-1',
+        name: 'Virender Sharma',
+        phone: '+91 98123 45678',
+        email: 'virender.sharma@example.com',
+        service: 'Comprehensive Kundali & Birth Chart Analysis',
+        date: new Date().toISOString().split('T')[0],
+        timeSlot: '17:00',
+        message: 'Career transition and planetary dasha analysis.',
+        status: 'Confirmed',
+        createdAt: new Date(Date.now() - 3600000 * 4).toISOString()
+      },
+      {
+        id: 'seed-2',
+        name: 'Sunita Aggarwal',
+        phone: '+91 94160 22334',
+        email: 'sunita.aggarwal@example.com',
+        service: 'Navgraha Shanti Pooja',
+        date: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+        timeSlot: '18:00',
+        message: 'Pooja for domestic peace and business growth.',
+        status: 'Confirmed',
+        createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
+      }
+    ];
+
+    // Helper: Google Calendar direct event URL (Requires NO script, NO OAuth, works 100% on static pages)
+    function getGoogleCalendarUrl(details) {
+      if (!details || !details.date || !details.timeSlot) return '#';
+      const cleanDate = details.date.replace(/-/g, '');
+      const [h, m] = details.timeSlot.split(':').map(Number);
+      const startH = (h || 17).toString().padStart(2, '0');
+      const startM = (m || 0).toString().padStart(2, '0');
+      const endH = ((h || 17) + 1).toString().padStart(2, '0');
+      const endM = (m || 0).toString().padStart(2, '0');
+
+      const istStart = `${cleanDate}T${startH}${startM}00`;
+      const istEnd = `${cleanDate}T${endH}${endM}00`;
+      
+      const title = encodeURIComponent(`Vedic Consultation: ${details.name} with Acharya Jitender Shastri`);
+      const desc = encodeURIComponent(
+`VEDIC PANDIT APPOINTMENT CONFIRMATION
+Astrologer: Acharya Jitender Shastri (+91 9466215390)
+Email: jksv390@gmail.com
+Chandigarh, India
+
+Client Details:
+Name: ${details.name}
+Phone: ${details.phone}
+Email: ${details.email || 'N/A'}
+Service: ${details.service || 'Astrology Consultation'}
+Scheduled Slot: ${details.timeSlot} IST (${details.date})
+
+Kundali / Birth Details / Query:
+${details.message || 'General birth chart review and remedial measures.'}
+
+Instructions:
+Please be ready on Phone or WhatsApp Video Call (+91 9466215390) at the designated time.`
+      );
+      const loc = encodeURIComponent("Chandigarh, India / Online Phone & WhatsApp Call (+91 9466215390)");
+      
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${istStart}/${istEnd}&details=${desc}&location=${loc}&add=jksv390@gmail.com&ctz=Asia/Kolkata`;
+    }
+
+    // Helper: RFC 5545 standard .ICS file generation and instant download (Apple Calendar, Outlook, Android)
+    function downloadICS(details) {
+      if (!details || !details.date) return;
+      const dateStr = details.date.replace(/-/g, '');
+      const [h, m] = (details.timeSlot || '17:00').split(':').map(Number);
+      const startH = (h || 17).toString().padStart(2, '0');
+      const startM = (m || 0).toString().padStart(2, '0');
+      const endH = ((h || 17) + 1).toString().padStart(2, '0');
+      const endM = (m || 0).toString().padStart(2, '0');
+      
+      const icsData = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Vedic Pandit//Acharya Jitender Shastri//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:REQUEST',
+        'BEGIN:VTIMEZONE',
+        'TZID:Asia/Kolkata',
+        'BEGIN:STANDARD',
+        'DTSTART:19700101T000000',
+        'TZOFFSETFROM:+0530',
+        'TZOFFSETTO:+0530',
+        'TZNAME:IST',
+        'END:STANDARD',
+        'END:VTIMEZONE',
+        'BEGIN:VEVENT',
+        `UID:vedic-${Date.now()}-${Math.floor(Math.random()*10000)}@vedicpandit.com`,
+        `DTSTAMP:${dateStr}T${startH}${startM}00Z`,
+        `DTSTART;TZID=Asia/Kolkata:${dateStr}T${startH}${startM}00`,
+        `DTEND;TZID=Asia/Kolkata:${dateStr}T${endH}${endM}00`,
+        `SUMMARY:Vedic Consultation with Acharya Jitender Shastri (${details.name})`,
+        `DESCRIPTION:Vedic Pandit Consultation Appointment\\nClient: ${details.name}\\nPhone: ${details.phone}\\nService: ${details.service}\\nNotes: ${details.message || 'N/A'}\\nAstrologer: Acharya Jitender Shastri (+91 9466215390)`,
+        'LOCATION:Chandigarh, India / Online Call (+91 9466215390)',
+        'ORGANIZER;CN=Acharya Jitender Shastri:mailto:jksv390@gmail.com',
+        `ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=${details.name}:mailto:${details.email || 'jksv390@gmail.com'}`,
+        'STATUS:CONFIRMED',
+        'BEGIN:VALARM',
+        'TRIGGER:-PT30M',
+        'ACTION:DISPLAY',
+        'DESCRIPTION:Reminder: Vedic Consultation with Acharya Jitender Shastri in 30 minutes',
+        'END:VALARM',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `Vedic_Consultation_${(details.name || 'Appointment').replace(/\s+/g, '_')}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // --- PANDIT PORTRAIT COMPONENT ---
+    // Permanent official astrologer portrait — non-removable and non-changeable once locked
+    function PanditPortrait({ size = 'normal', showControls = true }) {
+      const [showFullDarshan, setShowFullDarshan] = useState(false);
+      const [photo, setPhoto] = useState(() => {
+        try {
+          return localStorage.getItem('acharya_jitender_permanent_photo') || null;
+        } catch {
+          return null;
+        }
+      });
+      const [isLocked, setIsLocked] = useState(() => {
+        try {
+          return !!localStorage.getItem('acharya_jitender_permanent_photo');
+        } catch {
+          return false;
+        }
+      });
+      const fileInputRef = React.useRef(null);
+
+      useEffect(() => {
+        if (!photo) {
+          const testUrls = [
+            'astrologer_portrait.jpg',
+            '/astrologer_portrait.jpg',
+            'Screenshot 2026-10-14 at 10.39.17 PM.png',
+            '/Screenshot 2026-10-14 at 10.39.17 PM.png',
+            'astrologer_portrait.png',
+          ];
+          let found = false;
+          testUrls.forEach(url => {
+            if (found) return;
+            const img = new Image();
+            img.onload = () => {
+              if (!found) {
+                found = true;
+                setPhoto(url);
+                setIsLocked(true);
+              }
+            };
+            img.src = url;
+          });
+        }
+      }, [photo]);
+
+      const handleFileSelected = (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const dataUrl = event.target && event.target.result;
+          if (dataUrl) {
+            setPhoto(dataUrl);
+            setIsLocked(true);
+            try {
+              localStorage.setItem('acharya_jitender_permanent_photo', dataUrl);
+            } catch (err) {}
+            fetch('/api/upload-permanent-portrait', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ dataUrl })
+            }).catch(() => {});
+          }
+        };
+        reader.readAsDataURL(file);
+      };
+
+      const sizeClass = size === 'large' 
+        ? 'h-72 w-72 sm:h-84 sm:w-84' 
+        : size === 'small'
+          ? 'h-44 w-44'
+          : 'h-64 w-64 sm:h-72 sm:w-72';
+
+      return (
+        <div className="relative group inline-block text-center select-none">
+          {/* Spiritual Aura Background Glow */}
+          <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 rounded-full blur-md opacity-40 group-hover:opacity-70 transition duration-500 pointer-events-none" />
+
+          {/* Portrait Container — Permanent Astrologer Photo */}
+          <div 
+            onClick={() => {
+              if (photo) {
+                setShowFullDarshan(true);
+              } else if (fileInputRef.current) {
+                fileInputRef.current.click();
+              }
+            }}
+            title={photo ? "Acharya Jitender Shastri — Official Astrologer Portrait (Click for Full Darshan)" : "Click to select Screenshot 2026-10-14 at 10.39.17 PM.png to lock as permanent astrologer photo"}
+            className={`relative ${sizeClass} mx-auto rounded-full border-[5px] sm:border-[6px] border-[#facc15] shadow-[0_0_35px_rgba(250,204,21,0.35)] overflow-hidden bg-[#241344] transition-transform hover:scale-[1.02] cursor-pointer`}
+          >
+            {photo ? (
+              <img 
+                src={photo} 
+                alt="Acharya Jitender Shastri — Astrologer & Tantra Samrat" 
+                className="w-full h-full object-cover transition duration-300"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-b from-[#2e1d52] to-[#1a1033] text-center text-amber-200">
+                <span className="text-3xl mb-1">📷</span>
+                <div className="font-cinzel text-xs font-bold text-yellow-300 tracking-wide uppercase mb-1">
+                  Acharya Jitender Shastri
+                </div>
+                <div className="text-[11px] text-slate-300 font-medium leading-tight max-w-[200px]">
+                  Click once to lock your photo
+                  <span className="block text-yellow-400 font-semibold mt-0.5 text-[10px]">
+                    (Screenshot 2026-10-14 at 10.39.17 PM.png)
+                  </span>
+                  permanently into this app
+                </div>
+                <div className="mt-2.5 inline-flex items-center gap-1 px-3 py-1 bg-yellow-400 text-slate-950 font-bold text-[11px] rounded-full shadow-md">
+                  🔒 <span>Lock Photo Permanently</span>
+                </div>
+              </div>
+            )}
+
+            {!isLocked && (
+              <input 
+                ref={fileInputRef} 
+                type="file" 
+                accept="image/*" 
+                className="hidden" 
+                onChange={handleFileSelected} 
+              />
+            )}
+          </div>
+
+          {/* Permanent Official Badges (No Changable Controls) */}
+          {showControls && (
+            <div className="mt-3 flex flex-col items-center justify-center gap-1.5">
+              <button 
+                onClick={() => setShowFullDarshan(true)} 
+                className="text-xs font-semibold text-yellow-300 hover:text-yellow-200 bg-yellow-400/15 hover:bg-yellow-400/25 px-3.5 py-1.5 rounded-full border border-yellow-400/35 transition-colors shadow-sm"
+              >
+                👁 View Full Darshan
+              </button>
+              <div className="text-[11px] text-amber-300 bg-amber-500/10 px-3 py-0.5 rounded-full border border-amber-500/25">
+                ✦ Official Astrologer Photo • Permanent
+              </div>
+            </div>
+          )}
+
+          {/* Darshan Full Modal — Purely Informational, No Changing Photo */}
+          {showFullDarshan && (
+            <div 
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+              onClick={() => setShowFullDarshan(false)}
+            >
+              <div 
+                className="relative max-w-md w-full bg-gradient-to-b from-[#1f123d] to-[#120826] border border-yellow-400/40 rounded-3xl p-6 text-center shadow-2xl"
+                onClick={e => e.stopPropagation()}
+              >
+                <button 
+                  onClick={() => setShowFullDarshan(false)}
+                  className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"
+                >
+                  ✕
+                </button>
+
+                <div className="w-56 h-56 mx-auto rounded-full overflow-hidden border-4 border-yellow-400 shadow-[0_0_30px_rgba(250,204,21,0.5)] mb-4 bg-[#2a134d]">
+                  <PanditPortrait size="normal" showControls={false} />
+                </div>
+
+                <div className="inline-block px-3 py-1 rounded-full bg-yellow-400/15 border border-yellow-400/30 text-yellow-300 text-xs font-semibold mb-1">
+                  Verified Astrologer Photo • Permanent &amp; Non-Removable
+                </div>
+                <h3 className="font-cinzel text-2xl font-bold text-white mt-1">{ASTROLOGER.name}</h3>
+                <p className="text-yellow-300 text-xs font-medium mt-1">{ASTROLOGER.titles}</p>
+                <div className="mt-4 p-3 rounded-xl bg-black/40 border border-white/10 text-xs text-slate-300 leading-relaxed text-left">
+                  <div className="flex items-center gap-2 text-yellow-400 font-semibold mb-1">
+                    <span>✦ Certified Vedic Purohit</span>
+                    <span>•</span>
+                    <span>28+ Years Sadhana</span>
+                  </div>
+                  Available for in-person consultations in Chandigarh and worldwide online consultations via Phone, WhatsApp Video, and Google Meet.
+                </div>
+
+                <div className="mt-5">
+                  <a
+                    href="#contact"
+                    onClick={() => setShowFullDarshan(false)}
+                    className="w-full py-2.5 px-4 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold transition-all flex items-center justify-center shadow-lg"
+                  >
+                    ✦ Book Consultation / Janma Kundali Review
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // --- MAIN APPLICATION COMPONENT ---
+    function App() {
+      // Form & Booking states
+      const [name, setName] = useState('');
+      const [phone, setPhone] = useState('');
+      const [email, setEmail] = useState('');
+      const [selectedService, setSelectedService] = useState('');
+      const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+      const [date, setDate] = useState(tomorrow);
+      const [timeSlot, setTimeSlot] = useState('17:00');
+      const [message, setMessage] = useState('');
+
+      // Status states
+      const [isSending, setIsSending] = useState(false);
+      const [emailStatus, setEmailStatus] = useState(null); // 'dispatching' | 'delivered' | 'fallback'
+      const [submitted, setSubmitted] = useState(false);
+      const [activeRashi, setActiveRashi] = useState('aries');
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+
+      // Persistent bookings management
+      const [bookings, setBookings] = useState(() => {
+        try {
+          const saved = localStorage.getItem('vedic_pandit_appointments');
+          if (saved) return JSON.parse(saved);
+        } catch (_) {}
+        return INITIAL_SEED_BOOKINGS;
+      });
+
+      // Blocked dates in calendar
+      const [blockedDates, setBlockedDates] = useState(() => {
+        try {
+          const saved = localStorage.getItem('vedic_pandit_blocked_dates');
+          if (saved) return JSON.parse(saved);
+        } catch (_) {}
+        return [];
+      });
+
+      // Save bookings whenever changed
+      useEffect(() => {
+        try {
+          localStorage.setItem('vedic_pandit_appointments', JSON.stringify(bookings));
+        } catch (_) {}
+      }, [bookings]);
+
+      // Dynamic IST slots based on day of week
+      const slots = useMemo(() => {
+        if (!date) return [];
+        const d = new Date(date + 'T12:00:00');
+        const day = d.getDay(); // 0 is Sunday
+        if (day === 0) {
+          // Sunday: 10:00 AM - 5:00 PM IST
+          return [
+            '10:00', '10:45', '11:30', '12:15', '14:00', '14:45', '15:30', '16:15'
+          ];
+        } else {
+          // Monday - Saturday: 4:00 PM - 8:00 PM IST
+          return [
+            '16:00', '16:45', '17:30', '18:15', '19:00', '19:45'
+          ];
+        }
+      }, [date]);
+
+      // Set default slot if current slot isn't in valid day slots
+      useEffect(() => {
+        if (slots.length > 0 && !slots.includes(timeSlot)) {
+          setTimeSlot(slots[0]);
+        }
+      }, [slots]);
+
+      // Check if slot is taken for selected date
+      const isSlotBooked = (slot) => {
+        return bookings.some(b => b.date === date && b.timeSlot === slot && b.status !== 'Cancelled');
+      };
+
+      const isDateBlocked = (dateStr) => {
+        return blockedDates.includes(dateStr);
+      };
+
+      // Real Submission Handler:
+      // 1. Posts via FormSubmit.co AJAX to jksv390@gmail.com
+      // 2. Persists appointment locally so slot shows booked
+      // 3. Prepares 1-click Google Calendar & .ICS downloads
+      const handleBookSubmit = async (e) => {
+        e.preventDefault();
+        if (!name.trim() || !phone.trim() || !date || !timeSlot) {
+          alert('Please provide your Name, Phone Number, Date and Time Slot.');
+          return;
+        }
+
+        if (isDateBlocked(date)) {
+          alert('Acharya Ji is unavailable on this date due to special Vedic Havan / travel. Please select another date.');
+          return;
+        }
+
+        if (isSlotBooked(timeSlot)) {
+          alert('This time slot is already reserved. Please select another available time slot.');
+          return;
+        }
+
+        setIsSending(true);
+        setEmailStatus('dispatching');
+
+        const bookingPayload = {
+          _subject: `[Vedic Consultation Booking] ${name} — ${selectedService || 'Astrology'} (${date} at ${timeSlot} IST)`,
+          client_name: name,
+          client_phone: phone,
+          client_email: email || 'Not provided',
+          service_requested: selectedService || 'Comprehensive Kundali & Astrology Review',
+          scheduled_date: date,
+          scheduled_time_IST: `${timeSlot} IST`,
+          birth_details_and_notes: message || 'None provided',
+          astrologer_contact: 'Acharya Jitender Shastri (+91 9466215390, jksv390@gmail.com)',
+          booking_timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+        };
+
+        // Real automated email dispatch to jksv390@gmail.com
+        try {
+          const response = await fetch("https://formsubmit.co/ajax/jksv390@gmail.com", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify(bookingPayload)
+          });
+          
+          if (response.ok) {
+            setEmailStatus('delivered');
+          } else {
+            setEmailStatus('fallback');
+          }
+        } catch (err) {
+          console.warn("Background email dispatch handled gracefully:", err);
+          setEmailStatus('fallback');
+        }
+
+        // Add to persistent bookings
+        const newBooking = {
+          id: 'apt_' + Date.now(),
+          name,
+          phone,
+          email: email || '',
+          service: selectedService || 'Comprehensive Kundali & Astrology Review',
+          date,
+          timeSlot,
+          message: message || '',
+          status: 'Confirmed',
+          createdAt: new Date().toISOString()
+        };
+
+        const updated = [newBooking, ...bookings];
+        setBookings(updated);
+        try {
+          localStorage.setItem('vedic_pandit_appointments', JSON.stringify(updated));
+        } catch (_) {}
+
+        setIsSending(false);
+        setSubmitted(true);
+      };
+
+
+
+      // Download this exact HTML file for local offline use / Android App
+      const handleDownloadHTML = () => {
+        const htmlContent = document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'vedic_pandit_android_app.html';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+      // Download real ZIP file package containing offline app, manifest & instructions
+      const handleDownloadZip = () => {
+        const link = document.createElement('a');
+        link.href = '/vedic_pandit_app.zip';
+        link.download = 'vedic_pandit_app.zip';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+      // Pre-filled URLs
+      const mailtoUrl = `mailto:${ASTROLOGER.contact.email}?subject=${encodeURIComponent(`[Vedic Consultation] ${name} — ${selectedService || 'Astrology Review'}`)}&body=${encodeURIComponent(
+`Pranam Acharya Jitender Shastri Ji,
+
+I have reserved an official consultation appointment on your portal.
+
+--- Appointment Summary ---
+Client Name: ${name}
+Phone: ${phone}
+Email: ${email || 'N/A'}
+Service: ${selectedService || 'General Consultation'}
+Preferred Date: ${date}
+Preferred Slot: ${timeSlot} IST
+
+Kundali Details / Query:
+${message || 'Please guide me regarding birth chart analysis and remedy Vidhi.'}
+
+Warm regards,
+${name}
+`)}`;
+
+      const whatsAppUrl = `https://wa.me/919466215390?text=${encodeURIComponent(
+`Pranam Acharya Ji,
+I have booked an appointment on your official portal:
+Name: ${name}
+Phone: ${phone}
+Service: ${selectedService || 'Consultation'}
+Date: ${date} (${timeSlot} IST)
+Query: ${message || 'Please confirm the appointment.'}`)}`;
+
+      const currentBooking = { name, phone, email, service: selectedService, date, timeSlot, message };
+      const googleCalUrl = getGoogleCalendarUrl(currentBooking);
+      const activeRashiData = ZODIAC_SIGNS.find(s => s.id === activeRashi) || ZODIAC_SIGNS[0];
+
+      return (
+        <div className="min-h-screen cosmic-gradient cosmic-stars text-slate-100 flex flex-col selection:bg-yellow-400 selection:text-black">
+          {/* Top Announcement Bar */}
+          <div className="bg-[#1a0c36] border-b border-yellow-400/20 py-1.5 px-4 text-center text-xs flex items-center justify-between">
+            <div className="hidden md:flex items-center gap-2 text-yellow-300 mx-auto">
+              <span>✦ Real-Time Consultation Desk Active</span>
+              <span>•</span>
+              <span>Direct Booking with Acharya Jitender Shastri (+91 9466215390)</span>
+            </div>
+            <div className="flex items-center gap-2 mx-auto md:mx-0">
+              <button 
+                onClick={handleDownloadHTML}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black border border-emerald-400/40 text-xs font-semibold transition-all shadow-sm"
+                title="Download Vedic Pandit Android App"
+              >
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.0833 12 8.0833s-3.5902.3283-5.1368.8664L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.7777h24c-.3432-4.1188-2.6889-7.591-6.1185-9.4563"/>
+                </svg>
+                <span>Android App</span>
+              </button>
+
+              <button 
+                onClick={handleDownloadZip}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500 hover:text-black border border-yellow-400/40 text-xs font-semibold transition-all shadow-sm"
+                title="Download Real ZIP Package (.zip)"
+              >
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 14h-2v2h-2v-2H9v-2h2v-2h2v2h2v2zm-1-7V3.5L18.5 9H14z"/>
+                </svg>
+                <span>Download ZIP</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Sticky Navigation Header */}
+          <header className="sticky top-0 z-40 bg-[#0d0724]/90 backdrop-blur-md border-b border-white/10 py-3.5 px-4 sm:px-8">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+              <a href="#home" className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-500 to-amber-300 border border-yellow-400 flex items-center justify-center text-black font-bold text-xl shadow-[0_0_15px_rgba(250,204,21,0.4)]">
+                  ॐ
+                </div>
+                <div>
+                  <div className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide flex items-center gap-2">
+                    VEDIC PANDIT
+                    <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 font-sans uppercase">Verified Purohit</span>
+                  </div>
+                  <div className="text-[10px] text-yellow-400 uppercase tracking-widest font-semibold">Acharya Jitender Shastri</div>
+                </div>
+              </a>
+
+              <nav className="hidden lg:flex items-center gap-6 text-xs sm:text-sm font-medium text-slate-300">
+                <a href="#home" className="hover:text-yellow-400 transition-colors">Home</a>
+                <a href="#about" className="hover:text-yellow-400 transition-colors">About</a>
+                <a href="#horoscope" className="hover:text-yellow-400 transition-colors">Horoscope</a>
+                <a href="#pooja" className="hover:text-yellow-400 transition-colors">Vedic Pooja</a>
+                <a href="#yagya" className="hover:text-yellow-400 transition-colors">Yagya</a>
+                <a href="#services" className="hover:text-yellow-400 transition-colors">Services</a>
+                <a href="#contact" className="hover:text-yellow-400 transition-colors">Book Consultation</a>
+              </nav>
+
+              <div className="flex items-center gap-3">
+                <a 
+                  href="tel:+919466215390" 
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold shadow transition-transform active:scale-95"
+                >
+                  <span>📞 +91 9466215390</span>
+                </a>
+                <a 
+                  href="#contact" 
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-400 hover:from-yellow-400 hover:to-amber-300 text-black text-xs font-bold shadow-lg transition-transform active:scale-95"
+                >
+                  Book Slot
+                </a>
+                <button 
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="lg:hidden p-2 rounded-lg bg-white/10 text-white"
+                >
+                  ☰
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Dropdown Menu */}
+            {mobileMenuOpen && (
+              <div className="lg:hidden mt-3 pt-3 border-t border-white/10 flex flex-col gap-2 text-sm text-slate-200">
+                <a href="#home" onClick={() => setMobileMenuOpen(false)} className="py-1.5 hover:text-yellow-400">Home</a>
+                <a href="#about" onClick={() => setMobileMenuOpen(false)} className="py-1.5 hover:text-yellow-400">About Acharya Ji</a>
+                <a href="#horoscope" onClick={() => setMobileMenuOpen(false)} className="py-1.5 hover:text-yellow-400">Daily Rashiphal</a>
+                <a href="#pooja" onClick={() => setMobileMenuOpen(false)} className="py-1.5 hover:text-yellow-400">Vedic Pooja</a>
+                <a href="#yagya" onClick={() => setMobileMenuOpen(false)} className="py-1.5 hover:text-yellow-400">Yagya Rituals</a>
+                <a href="#services" onClick={() => setMobileMenuOpen(false)} className="py-1.5 hover:text-yellow-400">All Services</a>
+                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="py-1.5 text-yellow-400 font-bold">Book Real Consultation</a>
+                <div className="grid grid-cols-2 gap-2 border-t border-white/10 mt-1 pt-2">
+                  <button onClick={() => { handleDownloadHTML(); setMobileMenuOpen(false); }} className="py-2 px-3 text-center text-emerald-300 font-semibold flex items-center justify-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-xs">
+                    <span>📱 Android App</span>
+                  </button>
+                  <button onClick={() => { handleDownloadZip(); setMobileMenuOpen(false); }} className="py-2 px-3 text-center text-yellow-300 font-semibold flex items-center justify-center gap-1.5 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-xs">
+                    <span>📦 Download ZIP</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </header>
+
+          {/* Main Content Area */}
+          <main className="flex-grow">
+            {/* Hero Section */}
+            <section id="home" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div className="lg:col-span-7 text-center lg:text-left">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/30 text-yellow-300 text-xs font-semibold mb-4">
+                    <span>✨ 28+ Years of Vedic Lineage</span>
+                    <span className="w-1 h-1 rounded-full bg-yellow-400"></span>
+                    <span>Tantra Samrat & Gem Consultant</span>
+                  </div>
+
+                  <h1 className="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white mb-3 tracking-tight leading-tight">
+                    {ASTROLOGER.brandName}
+                  </h1>
+                  <div className="font-cinzel text-xl sm:text-2xl lg:text-3xl text-yellow-400 font-bold mb-4">
+                    {ASTROLOGER.heroSubtitle}
+                  </div>
+                  <p className="text-sm sm:text-base text-slate-200 bg-black/40 border border-white/10 p-4 rounded-2xl mb-6 max-w-xl">
+                    {ASTROLOGER.heroLine}
+                  </p>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 max-w-xl">
+                    {ASTROLOGER.heroParagraph}
+                  </p>
+
+                  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                    <a 
+                      href="#contact" 
+                      className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-400 hover:from-yellow-400 hover:to-amber-300 text-black font-bold text-sm shadow-[0_0_25px_rgba(250,204,21,0.4)] transition-transform active:scale-95"
+                    >
+                      Book Real Consultation Slot
+                    </a>
+                    <a 
+                      href="#horoscope" 
+                      className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all"
+                    >
+                      Read Daily Rashiphal
+                    </a>
+                  </div>
+
+                  {/* Highlights Row */}
+                  <div className="grid grid-cols-3 gap-3 mt-10 pt-8 border-t border-white/10 text-center lg:text-left">
+                    <div>
+                      <div className="font-cinzel text-2xl font-bold text-yellow-400">28+ Yrs</div>
+                      <div className="text-xs text-slate-400">Vedic Sadhana</div>
+                    </div>
+                    <div>
+                      <div className="font-cinzel text-2xl font-bold text-yellow-400">15,000+</div>
+                      <div className="text-xs text-slate-400">Kundalis Decoded</div>
+                    </div>
+                    <div>
+                      <div className="font-cinzel text-2xl font-bold text-yellow-400">100%</div>
+                      <div className="text-xs text-slate-400">Authentic Vidhi</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Permanent Astrologer Photo Hero Card */}
+                <div className="lg:col-span-5 flex justify-center">
+                  <div className="w-full max-w-md rounded-3xl border border-yellow-400/30 bg-gradient-to-b from-[#251547]/90 via-[#1a0d36]/90 to-[#100726]/95 p-8 shadow-2xl text-center relative golden-glow">
+                    <div className="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-3">✦ Permanent Astrologer Portrait ✦</div>
+                    <PanditPortrait size="large" />
+                    <h3 className="font-cinzel text-2xl font-bold text-white mt-4">{ASTROLOGER.name}</h3>
+                    <div className="text-yellow-400 text-xs font-semibold mt-1">Astrologer • Tantra Samrat • Certified Gem Consultant</div>
+                    <p className="text-slate-300 text-xs mt-3 leading-relaxed">
+                      Standing by the sacred seashore in white dhoti, angavastram, rudraksha mala, and vermilion tilak. Click portrait anytime for high-resolution sacred darshan view.
+                    </p>
+                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-center gap-4 text-xs text-slate-300">
+                      <span>📍 Chandigarh, India</span>
+                      <span>•</span>
+                      <a href="tel:+919466215390" className="text-yellow-400 font-bold hover:underline">+91 9466215390</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* About Section */}
+            <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div className="lg:col-span-5 flex justify-center order-2 lg:order-1">
+                  <div className="w-full max-w-sm rounded-3xl border border-purple-400/25 bg-gradient-to-b from-[#241747]/90 via-[#1e133e]/80 to-[#140b2e]/95 p-8 shadow-2xl text-center">
+                    <PanditPortrait size="normal" />
+                    <div className="mt-4 font-cinzel text-lg font-bold text-white">Lineage of Sanatana Purohits</div>
+                    <div className="text-yellow-400 text-xs mt-1">28+ Years Continuous Tapasya</div>
+                    <div className="mt-4 p-3 rounded-xl bg-black/40 border border-white/10 text-xs text-slate-300 text-left space-y-1.5">
+                      <div>✓ Rigveda & Jyotish Agama Scholar</div>
+                      <div>✓ Tantric Shanti & Raksha Kavach</div>
+                      <div>✓ Lab Certified Natural Gemstones</div>
+                      <div>✓ Vedic Yagya & Maha Havan Acharya</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7 order-1 lg:order-2">
+                  <div className="text-yellow-400 text-xs uppercase tracking-widest font-semibold mb-2">✦ Vedic Agamas & Tantra Shastra</div>
+                  <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white mb-6">
+                    {ASTROLOGER.aboutHeading}
+                  </h2>
+                  <p className="text-slate-300 text-base leading-relaxed mb-4">
+                    With over 28 years of dedicated practice in traditional Jyotish Shastra, Acharya Jitender Shastri provides profound clarity on birth charts, planetary transitions, and destiny. Revered as <span className="text-yellow-400 font-semibold underline">Tantra Samrat</span> for mastery in dosh nivaran remedies and authentic shanti pooja.
+                  </p>
+                  <p className="text-slate-300 text-base leading-relaxed mb-8">
+                    As a certified <span className="text-yellow-400 font-semibold underline">Gem Consultant</span>, Acharya ji recommends genuine, lab-certified ratnas matched to your natal planetary coordinates and degree strengths.
+                  </p>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/10">
+                    {ASTROLOGER.stats.map((s, i) => (
+                      <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
+                        <div className="font-cinzel text-2xl sm:text-3xl font-extrabold text-yellow-400">{s.value}</div>
+                        <div className="text-xs text-slate-300 mt-1">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Daily Horoscope Section */}
+            <section id="horoscope" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+              <div className="text-center max-w-2xl mx-auto mb-10">
+                <div className="text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-2">✦ Daily Astrological Guidance</div>
+                <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white">Daily Vedic Rashiphal</h2>
+                <p className="text-slate-300 text-xs sm:text-sm mt-2">Planetary calculations and daily remedial mantras for all 12 moon signs.</p>
+              </div>
+
+              {/* Rashi Selector Buttons */}
+              <div className="flex flex-wrap gap-2 justify-center mb-8">
+                {ZODIAC_SIGNS.map(s => (
+                  <button
+                    key={s.id}
+                    onClick={() => setActiveRashi(s.id)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRashi === s.id ? 'bg-yellow-400 text-black font-bold shadow-lg scale-105' : 'bg-white/10 text-slate-300 hover:bg-white/20'}`}
+                  >
+                    <span>{s.symbol} {s.rashi.split(' ')[0]}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Rashi Card */}
+              <div className="max-w-3xl mx-auto p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/10 to-white/5 border border-yellow-400/30 backdrop-blur-md shadow-2xl">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 mb-4 gap-3">
+                  <div>
+                    <h3 className="font-cinzel text-2xl font-bold text-yellow-400">{activeRashiData.symbol} {activeRashiData.rashi}</h3>
+                    <div className="text-xs text-slate-300">{activeRashiData.dates} • Element: {activeRashiData.element} • Ruling Planet: <span className="text-yellow-300 font-semibold">{activeRashiData.rulingPlanet}</span></div>
+                  </div>
+                  <div className="text-left sm:text-right text-xs">
+                    <div className="text-yellow-300 font-semibold">Gemstone: {activeRashiData.gemstone}</div>
+                    <div className="text-slate-400">Lucky Numbers: {activeRashiData.luckyNumber}</div>
+                  </div>
+                </div>
+
+                <p className="text-slate-200 text-sm sm:text-base leading-relaxed mb-6">{activeRashiData.prediction}</p>
+
+                <div className="p-4 rounded-2xl bg-black/50 border border-yellow-400/40 text-yellow-300 text-xs sm:text-sm font-devanagari text-center mb-6">
+                  <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">Daily Sanatana Beej Mantra</div>
+                  <div className="text-base font-semibold">{activeRashiData.mantra}</div>
+                </div>
+
+                <div className="text-center">
+                  <a 
+                    href="#contact" 
+                    onClick={() => setSelectedService(`Detailed Kundali Reading for ${activeRashiData.english}`)}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold transition-all shadow"
+                  >
+                    Consult Acharya Ji for {activeRashiData.english} (Birth Chart Review)
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            {/* Sacred Vedic Pooja Section */}
+            <section id="pooja" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+              <div className="text-center max-w-2xl mx-auto mb-12">
+                <div className="text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-2">✦ Sacred Sanatana Rituals</div>
+                <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white">Vedic Pooja Vidhi</h2>
+                <p className="text-slate-300 text-xs sm:text-sm mt-2">Conducted with authentic Vedic samagri, precise sankalpa, and Vedic chanting.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {VEDIC_POOJAS.map(p => (
+                  <div key={p.id} className="p-6 rounded-2xl bg-white/10 border border-white/15 hover:border-yellow-400/40 transition-all flex flex-col justify-between hover:bg-white/15">
+                    <div>
+                      <div className="font-devanagari text-xs text-yellow-400 mb-1">{p.sanskrit}</div>
+                      <h3 className="font-cinzel text-xl font-bold text-white mb-2">{p.title}</h3>
+                      <p className="text-slate-300 text-xs leading-relaxed mb-4">{p.description}</p>
+                    </div>
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                      <div>
+                        <div className="text-xs text-slate-400">{p.duration}</div>
+                        <div className="text-lg font-bold text-yellow-400">{p.price}</div>
+                      </div>
+                      <a 
+                        href="#contact" 
+                        onClick={() => setSelectedService(p.title)}
+                        className="px-3.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold transition-colors"
+                      >
+                        Book Pooja
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Yagya Section */}
+            <section id="yagya" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+              <div className="text-center max-w-2xl mx-auto mb-12">
+                <div className="text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-2">✦ Maha Havan & Agni Hotra</div>
+                <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white">Vedic Yagya Rituals</h2>
+                <p className="text-slate-300 text-xs sm:text-sm mt-2">Sacred fire oblations performed strictly adhering to Shrauta and Grihya Sutras.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {YAGYAS.map(y => (
+                  <div key={y.id} className="p-6 rounded-2xl bg-white/10 border border-white/15 hover:border-yellow-400/40 transition-all flex flex-col justify-between hover:bg-white/15">
+                    <div>
+                      <div className="font-devanagari text-xs text-yellow-400 mb-1">{y.sanskrit}</div>
+                      <h3 className="font-cinzel text-xl font-bold text-white mb-2">{y.title}</h3>
+                      <p className="text-slate-300 text-xs leading-relaxed mb-4">{y.description}</p>
+                    </div>
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                      <div>
+                        <div className="text-xs text-slate-400">{y.duration}</div>
+                        <div className="text-lg font-bold text-yellow-400">{y.price}</div>
+                      </div>
+                      <a 
+                        href="#contact" 
+                        onClick={() => setSelectedService(y.title)}
+                        className="px-3.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold transition-colors"
+                      >
+                        Request Yagya
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Services Section */}
+            <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+              <div className="text-center max-w-2xl mx-auto mb-12">
+                <div className="text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-2">✦ Consultation Disciplines</div>
+                <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white">Astrology & Remedial Services</h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {SERVICES.map(s => (
+                  <div key={s.id} className="p-6 rounded-2xl bg-white/10 border border-white/15 hover:border-yellow-400/40 transition-all flex flex-col justify-between hover:bg-white/15">
+                    <div>
+                      <h3 className="font-cinzel text-lg font-bold text-white mb-2">{s.title}</h3>
+                      <p className="text-slate-300 text-xs leading-relaxed mb-4">{s.description}</p>
+                    </div>
+                    <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                      <div className="text-lg font-bold text-yellow-400">{s.price}</div>
+                      <a 
+                        href="#contact" 
+                        onClick={() => setSelectedService(s.title)}
+                        className="px-3.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-bold transition-colors"
+                      >
+                        Select Service
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* REAL BOOKING & APPOINTMENT DESK */}
+            <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+              <div className="text-center max-w-2xl mx-auto mb-12">
+                <div className="text-yellow-400 text-xs font-semibold uppercase tracking-widest mb-2">✦ Real Appointment Desk</div>
+                <h2 className="font-cinzel text-3xl sm:text-4xl font-bold text-white">Book Your Consultation</h2>
+                <p className="text-slate-300 text-xs sm:text-sm mt-2">
+                  Live availability slot verification, automated email delivery to Acharya Ji, Google Calendar pre-invite sync, and downloadable .ICS invite.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                {/* Official Contact Info Card */}
+                <div className="lg:col-span-5 space-y-6">
+                  <div className="p-6 rounded-3xl bg-white/10 border border-white/15 backdrop-blur-md">
+                    <h3 className="font-cinzel text-lg font-bold text-yellow-400 mb-4">Official Channels</h3>
+                    <div className="space-y-4 text-xs">
+                      <div>
+                        <div className="text-slate-400 uppercase font-semibold">Direct Call & WhatsApp</div>
+                        <a href="tel:+919466215390" className="text-white font-bold text-base hover:text-yellow-400 block mt-0.5">+91 9466215390</a>
+                      </div>
+                      <div>
+                        <div className="text-slate-400 uppercase font-semibold">Official Email</div>
+                        <a href="mailto:jksv390@gmail.com" className="text-white font-bold text-base hover:text-yellow-400 block mt-0.5">jksv390@gmail.com</a>
+                      </div>
+                      <div>
+                        <div className="text-slate-400 uppercase font-semibold">Consultation Hours (IST)</div>
+                        <div className="text-slate-200 mt-1">Monday - Saturday: 4:00 PM - 8:00 PM IST</div>
+                        <div className="text-slate-200">Sunday: 10:00 AM - 5:00 PM IST</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-400 uppercase font-semibold">Location</div>
+                        <div className="text-slate-200 mt-1">Chandigarh, India (In-person & Global Online Sessions)</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Availability Legend & Status */}
+                  <div className="p-5 rounded-2xl bg-black/40 border border-white/10 text-xs space-y-2">
+                    <div className="text-yellow-400 font-semibold uppercase tracking-wider text-[11px]">✦ Real-Time Booking Engine</div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                      <span>Green slots = Live Available for selection</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                      <span>Red slots = Locked / Booked (Conflict prevention)</span>
+                    </div>
+                    <div className="text-[11px] text-slate-400 pt-2 border-t border-white/10">
+                      Submissions automatically notify Acharya Ji’s inbox at <span className="text-yellow-300">jksv390@gmail.com</span> and prepare direct Google Calendar invitations.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Form or Confirmation Card */}
+                <div className="lg:col-span-7">
+                  <div className="p-6 sm:p-8 rounded-3xl bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl">
+                    {submitted ? (
+                      <div className="text-center py-6">
+                        <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto mb-4 text-3xl font-bold">
+                          ✓
+                        </div>
+                        <h4 className="font-cinzel text-2xl font-bold text-white mb-2">Appointment Scheduled & Locked!</h4>
+                        <p className="text-slate-300 text-sm max-w-md mx-auto mb-4">
+                          Pranam <span className="text-yellow-400 font-semibold">{name}</span>. Your slot for <span className="text-yellow-400 font-semibold">{selectedService || 'Consultation'}</span> on <span className="text-white font-semibold">{date}</span> at <span className="text-yellow-400 font-semibold">{timeSlot} IST</span> has been locked in the calendar.
+                        </p>
+
+                        {/* Real Email Dispatch Status Feedback */}
+                        <div className="mb-6 p-3 rounded-xl bg-black/40 border border-emerald-500/30 text-xs text-left max-w-md mx-auto">
+                          {emailStatus === 'delivered' ? (
+                            <div className="flex items-center gap-2 text-emerald-300">
+                              <span className="text-base">✓</span>
+                              <span>Real email notification dispatched directly to Acharya Ji (<strong>jksv390@gmail.com</strong>).</span>
+                            </div>
+                          ) : (
+                            <div className="text-slate-300">
+                              <span>Slot successfully registered! For instant confirmation, tap the email or WhatsApp actions below:</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Verified Google Pay & UPI Scanner Dakshina Card */}
+                        <div className="mb-6 p-4 rounded-2xl bg-white text-slate-900 shadow-xl max-w-md mx-auto text-center border-2 border-amber-400">
+                          <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+                            <div className="flex items-center gap-2">
+                              <span className="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">🕉</span>
+                              <span className="font-bold text-xs text-slate-800">Jitender Kumar Sharma</span>
+                            </div>
+                            <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Google Pay Verified</span>
+                          </div>
+                          <div className="text-sm font-bold text-slate-900 mb-1">
+                            UPI ID: <span className="text-blue-700 font-mono select-all">jksv390-1@okaxis</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 mb-3">Scan or pay ₹1,100 Dakshina with any UPI app (Google Pay, PhonePe, Paytm)</p>
+                          <a 
+                            href="upi://pay?pa=jksv390-1@okaxis&pn=Jitender%20Kumar%20Sharma&am=1100.00&cu=INR&tn=Vedic%20Consultation%20Dakshina"
+                            className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow transition"
+                          >
+                            📱 Pay ₹1,100 via Google Pay / UPI App
+                          </a>
+                        </div>
+
+                        {/* 4 Real Actions for User */}
+                        <div className="space-y-3 max-w-md mx-auto mb-6">
+                          {/* 1. Add Directly to Google Calendar (Pre-invites jksv390@gmail.com) */}
+                          <a 
+                            href={googleCalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-yellow-300 border border-yellow-400/40 font-bold text-xs transition-colors shadow"
+                          >
+                            📅 Add Directly to Google Calendar (Includes Acharya Ji)
+                          </a>
+
+                          {/* 2. Download .ICS for Apple / Outlook / Phone Calendar */}
+                          <button 
+                            type="button"
+                            onClick={() => downloadICS(currentBooking)}
+                            className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-indigo-900/60 hover:bg-indigo-800 text-slate-200 border border-white/20 font-semibold text-xs transition-colors"
+                          >
+                            📥 Download .ICS Calendar Invite (Apple / Outlook / Phone)
+                          </button>
+
+                          {/* 3. Send Pre-filled Email via Mail Client */}
+                          <a 
+                            href={mailtoUrl}
+                            className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs shadow-md transition-transform active:scale-95"
+                          >
+                            ✉ Send Pre-filled Email from Your App to jksv390@gmail.com
+                          </a>
+
+                          {/* 4. Instant WhatsApp confirmation */}
+                          <a 
+                            href={whatsAppUrl}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs shadow-md transition-transform active:scale-95"
+                          >
+                            💬 Send Instant Booking Alert on WhatsApp (+91 9466215390)
+                          </a>
+                        </div>
+
+                        <button 
+                          onClick={() => { setSubmitted(false); setEmailStatus(null); }}
+                          className="text-xs text-slate-400 hover:text-white underline mt-2"
+                        >
+                          ← Book Another Slot or Edit Details
+                        </button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleBookSubmit} className="space-y-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs text-slate-300 font-semibold mb-1">Your Full Name *</label>
+                            <input 
+                              type="text" 
+                              required 
+                              value={name} 
+                              onChange={e => setName(e.target.value)}
+                              placeholder="e.g. Rahul Sharma"
+                              className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs text-slate-300 font-semibold mb-1">Phone Number (WhatsApp) *</label>
+                            <input 
+                              type="tel" 
+                              required 
+                              value={phone} 
+                              onChange={e => setPhone(e.target.value)}
+                              placeholder="+91 98765 43210"
+                              className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs text-slate-300 font-semibold mb-1">Email Address</label>
+                            <input 
+                              type="email" 
+                              value={email} 
+                              onChange={e => setEmail(e.target.value)}
+                              placeholder="youremail@example.com"
+                              className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs text-slate-300 font-semibold mb-1">Select Service / Pooja</label>
+                            <input 
+                              type="text" 
+                              value={selectedService} 
+                              onChange={e => setSelectedService(e.target.value)}
+                              placeholder="e.g. Kundali Analysis or Navgraha Pooja"
+                              className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs text-slate-300 font-semibold mb-1">Consultation Date</label>
+                            <input 
+                              type="date" 
+                              min={new Date().toISOString().split('T')[0]}
+                              value={date} 
+                              onChange={e => setDate(e.target.value)}
+                              className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs text-slate-300 font-semibold mb-1">Select Time Slot (IST)</label>
+                            <select 
+                              value={timeSlot} 
+                              onChange={e => setTimeSlot(e.target.value)}
+                              className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                            >
+                              {slots.map(s => {
+                                const booked = isSlotBooked(s);
+                                return (
+                                  <option key={s} value={s} disabled={booked} className="bg-slate-900 text-white">
+                                    {s} IST {booked ? '— 🔴 Reserved' : '— 🟢 Available'}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Interactive Slot Pills */}
+                        <div>
+                          <label className="block text-[11px] text-slate-400 font-medium mb-1.5">Quick Select Available Time (IST):</label>
+                          <div className="flex flex-wrap gap-2">
+                            {slots.map(s => {
+                              const booked = isSlotBooked(s);
+                              const selected = timeSlot === s;
+                              return (
+                                <button
+                                  type="button"
+                                  key={s}
+                                  disabled={booked}
+                                  onClick={() => setTimeSlot(s)}
+                                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                                    booked 
+                                      ? 'bg-red-500/15 border border-red-500/30 text-red-300 opacity-60 cursor-not-allowed line-through' 
+                                      : selected 
+                                        ? 'bg-yellow-400 text-black border border-yellow-300 shadow-md scale-105' 
+                                        : 'bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200'
+                                  }`}
+                                >
+                                  {s} IST {booked ? '✕' : ''}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs text-slate-300 font-semibold mb-1">Birth Details / Gotra / Specific Questions</label>
+                          <textarea 
+                            rows="3" 
+                            value={message} 
+                            onChange={e => setMessage(e.target.value)}
+                            placeholder="Please provide Date of Birth, Time of Birth, Place of Birth, Gotra, or any specific concerns..."
+                            className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/20 text-white text-xs focus:outline-none focus:border-yellow-400"
+                          ></textarea>
+                        </div>
+
+                        <button 
+                          type="submit" 
+                          disabled={isSending || isSlotBooked(timeSlot)}
+                          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-400 hover:from-yellow-400 hover:to-amber-300 text-black font-bold text-sm shadow-xl transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        >
+                          {isSending ? (
+                            <span>⏳ Dispatching Booking to Acharya Ji...</span>
+                          ) : (
+                            <span>✓ Lock Slot & Confirm with Acharya Ji</span>
+                          )}
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+
+
+
+          {/* Footer */}
+          <footer className="py-12 border-t border-white/10 text-center text-xs text-slate-400 px-4 bg-[#0a0518]">
+            <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-yellow-400/20 border border-yellow-400/40 flex items-center justify-center text-yellow-400 font-bold text-lg">
+                ॐ
+              </div>
+              <div className="font-cinzel text-white font-bold text-sm tracking-wide">
+                VEDIC PANDIT — ACHARYA JITENDER SHASTRI
+              </div>
+              <p className="text-slate-300 max-w-md">
+                Astrologer • Tantra Samrat • Certified Gem Consultant • Sanatana Purohit
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4 text-slate-300">
+                <span>📍 Chandigarh, India</span>
+                <span>•</span>
+                <a href="tel:+919466215390" className="hover:text-yellow-400 font-semibold">+91 9466215390</a>
+                <span>•</span>
+                <a href="mailto:jksv390@gmail.com" className="hover:text-yellow-400 font-semibold">jksv390@gmail.com</a>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
+                <button 
+                  onClick={handleDownloadHTML}
+                  className="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black border border-emerald-400/40 font-semibold text-xs transition-colors flex items-center gap-1.5"
+                  title="Download Vedic Pandit Android App"
+                >
+                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.0833 12 8.0833s-3.5902.3283-5.1368.8664L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.7777h24c-.3432-4.1188-2.6889-7.591-6.1185-9.4563"/>
+                  </svg>
+                  <span>Android App (.html)</span>
+                </button>
+                <button 
+                  onClick={handleDownloadZip}
+                  className="px-3.5 py-1.5 rounded-full bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500 hover:text-black border border-yellow-400/40 font-semibold text-xs transition-colors flex items-center gap-1.5 shadow-[0_0_12px_rgba(250,204,21,0.15)]"
+                  title="Download Real ZIP Package of Vedic Pandit"
+                >
+                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 14h-2v2h-2v-2H9v-2h2v-2h2v2h2v2zm-1-7V3.5L18.5 9H14z"/>
+                  </svg>
+                  <span>Download Real ZIP (.zip)</span>
+                </button>
+              </div>
+              <p className="text-[10px] text-slate-600 mt-4 max-w-xl">
+                All consultations, pooja vidhis, and yagya anushthans strictly conducted according to authentic Vedic Agamas and Sanatana Parampara. Real calendar invites conform to RFC 5545 iCalendar standard.
+              </p>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
